@@ -15,6 +15,8 @@ public class TaxProcessor extends HttpServlet {
             String s1=request.getParameter("t1");
             String s2=request.getParameter("t2");
             String s[]=request.getParameterValues("t3");
+            String s3=request.getParameter("c1");
+            String s4=request.getParameter("r1");
             
             int tax=0;
             int income=Integer.parseInt(s1);
@@ -32,6 +34,16 @@ public class TaxProcessor extends HttpServlet {
             int srch=0;
             if(s!=null){
             srch=s.length*500;
+            }
+            int nriCharge=0;
+            if(s3!=null){
+                nriCharge=10000;
+            }
+            int ptax;
+            if(s4.equals("service")){
+                ptax=1000;
+            }else{
+                ptax=2000;
             }
             out.println("<html>");
             out.println("<body>");
@@ -53,6 +65,14 @@ public class TaxProcessor extends HttpServlet {
             out.println("<tr>");
             out.println("<td>Sucharge</td>");
             out.println("<td>"+srch+"</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td>NRI-Charge</td>");
+            out.println("<td>"+nriCharge+"</td>");
+            out.println("</tr>");
+            out.println("<tr>");
+            out.println("<td>Prof-Tax</td>");
+            out.println("<td>"+ptax+"</td>");
             out.println("</tr>");
             
             out.println("</table>");

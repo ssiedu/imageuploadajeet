@@ -4,9 +4,33 @@
         <servlet-name>TaxProcessor</servlet-name>
         <servlet-class>TaxProcessor</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Demo</servlet-name>
+        <servlet-class>Demo</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TaxRates</servlet-name>
+        <servlet-class>TaxRates</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GuideLines</servlet-name>
+        <servlet-class>GuideLines</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TaxProcessor</servlet-name>
         <url-pattern>/TaxProcessor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Demo</servlet-name>
+        <url-pattern>/Demo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaxRates</servlet-name>
+        <url-pattern>/TaxRates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuideLines</servlet-name>
+        <url-pattern>/GuideLines</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
