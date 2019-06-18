@@ -4,9 +4,11 @@ import java.sql.*;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class VerifyUser extends HttpServlet {
     Connection con;PreparedStatement ps;ResultSet rs;
@@ -54,6 +56,19 @@ public class VerifyUser extends HttpServlet {
             rs=ps.executeQuery();
             boolean found=rs.next();
             if(found==true){
+                String name=rs.getString(1);
+                HttpSession session=request.getSession();
+                session.setAttribute("username", name);
+                
+                String sp=request.getParameter("save");
+                if(sp!=null){
+                    Cookie ck1=new Cookie("uid",s1);
+                    Cookie ck2=new Cookie("pwd",s2);
+                    ck1.setMaxAge(60*60*24*7);
+                    ck2.setMaxAge(60*60*24*7);
+                    response.addCookie(ck1);
+                    response.addCookie(ck2);
+                }
                 RequestDispatcher rd=request.getRequestDispatcher("buyerhome.jsp");
                 rd.forward(request, response);
                 //out.println("Welcome Buyer");

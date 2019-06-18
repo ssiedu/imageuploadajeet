@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class ShowCategories extends HttpServlet {
 
@@ -13,6 +14,12 @@ public class ShowCategories extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+       
+        HttpSession session=request.getSession();
+        String name=(String)session.getAttribute("username");
+        if(name==null){
+            response.sendRedirect("index.jsp");
+        }
         try{
         Class.forName("com.mysql.jdbc.Driver");
         Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test1", "root", "root");
@@ -21,6 +28,7 @@ public class ShowCategories extends HttpServlet {
         ResultSet rs=ps.executeQuery();
         out.println("<html>");
         out.println("<body>");
+        out.println("<h2>Welcome "+name+"</h2>");
         out.println("<h2>Select Desired Category</h2>");
         out.println("<hr>");
         while(rs.next()){
