@@ -1,7 +1,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.*;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,49 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ShowCategories extends HttpServlet {
+public class RemoveItem extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        int no=0; 
+        String id=request.getParameter("id");
         HttpSession session=request.getSession();
         ArrayList list=(ArrayList)session.getAttribute("cart");
-        if(list!=null){
-            no=list.size();
-        }
-        String name=(String)session.getAttribute("username");
-        if(name==null){
-            response.sendRedirect("index.jsp");
-        }
-        try{
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test1", "root", "root");
-        String qr="select distinct category from prodinfo order by category";
-        PreparedStatement ps=con.prepareStatement(qr);
-        ResultSet rs=ps.executeQuery();
-        out.println("<html>");
-        out.println("<body>");
-        out.println("<h2>Welcome "+name+"</h2>");
-        out.println("<h3>Total items in cart "+no+"</h3>");
-        out.println("<h2>Select Desired Category</h2>");
-        out.println("<hr>");
-        while(rs.next()){
-            String s=rs.getString(1);
-            out.println("<a href=ShowItems?cat="+s+">");
-            out.println(s);
-            out.println("</a>");
-            out.println("<br>");
-        }
-        out.println("<hr>");
-        out.println("<a href=buyerhome.jsp>Buyer-home</a>");
-        out.println("</body>");
-        out.println("</html>");
-        con.close();
-        }catch(Exception e){
-            
-        }
+        list.remove(id);
+        session.setAttribute("cart", list);
+        response.sendRedirect("DisplayCart");
         }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

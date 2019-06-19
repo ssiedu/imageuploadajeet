@@ -1,4 +1,5 @@
 <%
+    session.setMaxInactiveInterval(150);
 String v1="",v2="";
 Cookie ck[]=request.getCookies();
 if(ck!=null){
